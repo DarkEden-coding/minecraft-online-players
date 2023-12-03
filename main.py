@@ -71,7 +71,7 @@ async def update_online_message():
     channel = client.get_channel(status_channel)
     online_players, specific_players = get_server_info()
     specific_players = ", ".join(specific_players)
-    message_content = f"The server has {online_players} players online\nThe server has the following players online: {specific_players}"
+    message_content = f"The server has {online_players} players online\nThe server has the following players online: {specific_players}".strip()
 
     # send message to debug channel, uses current time and date
     await client.get_channel(debug_channel).send(
