@@ -3,6 +3,7 @@ from discord.ext import tasks
 from discord import app_commands
 from mcstatus import JavaServer
 import time
+from constants import discord_bot_token
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -130,4 +131,4 @@ async def update_client():
 
 
 # Start the client with your client token
-client.run("MTE3OTU3OTkwOTQwOTA5NTczMQ.GYq1ws.IP9snYfpr9TK0oMywv-Zlmfbu_HII9nFGwMaCM")
+client.run(discord_bot_token)
