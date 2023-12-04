@@ -19,8 +19,7 @@ guild_id = 1176557788491685908
 
 
 def send_error_message(error):
-    user = client.fetch_user(806281289040396288)
-    client.get_channel(debug_channel).send(f"Error: {str(error)} {user.mention}")
+    client.get_channel(debug_channel).send(f"Error: {str(error)} <@806281289040396288>")
 
 
 def get_server_info():
