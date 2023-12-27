@@ -45,7 +45,7 @@ async def get_server_info():
 
 # Function to update the client's status message
 async def update_client_status():
-    online_players, specific_players = get_server_info()
+    online_players, specific_players = await get_server_info()
     await client.change_presence(
         activity=discord.Game(name=f"{online_players} players online")
     )
@@ -54,7 +54,7 @@ async def update_client_status():
 async def player_log_logs():
     global last_update_players
 
-    _, specific_players = get_server_info()
+    _, specific_players = await get_server_info()
 
     # Find the strings in list1 that are not in list2
     difference1 = [item for item in specific_players if item not in last_update_players]
@@ -77,7 +77,7 @@ async def player_log_logs():
 
 async def update_online_message():
     channel = client.get_channel(status_channel)
-    online_players, specific_players = get_server_info()
+    online_players, specific_players = await get_server_info()
     specific_players = ", ".join(specific_players)
     message_content = f"The server has {online_players} players online\nThe server has the following players online: {specific_players}".strip()
 
@@ -110,7 +110,7 @@ async def update_online_message():
 )  # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def online_players(ctx):
-    online_players, specific_players = get_server_info()
+    online_players, specific_players = await get_server_info()
     specific_players = ", ".join(specific_players)
     print(f"The server has {online_players} players online")
     print(f"The server has the following players online: {specific_players}")
