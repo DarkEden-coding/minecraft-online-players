@@ -15,24 +15,26 @@ server_address = "numbereater.com"
 status_channel = 1179990041494294648
 log_channel = 1179991971234848860
 debug_channel = 1180938049480310804
-guild_id = 1176557788491685908
 
 
-def send_error_message(error):
-    user = client.fetch_user(806281289040396288)
-    client.get_channel(debug_channel).send(f"Error: {str(error)} {user.mention}")
+async def send_error_message(error):
+    await client.get_channel(debug_channel).send(f"Error: {str(error)} <@806281289040396288>")
 
 
-def get_server_info():
+async def get_server_info():
     while True:
         try:
             server = JavaServer.lookup(server_address)
             query = server.query()
             status = server.status()
             online_players = status.players.online
+            # check to make sure the objects are the correct types
+            assert isinstance(online_players, int)
+            assert isinstance(query.players.names, list)
             return online_players, query.players.names
         except Exception as e:
-            send_error_message(e)
+            await send_error_message(e)
+            return 0, []
 
 
 # Function to update the client's status message
@@ -71,7 +73,7 @@ async def update_online_message():
     channel = client.get_channel(status_channel)
     online_players, specific_players = get_server_info()
     specific_players = ", ".join(specific_players)
-    message_content = f"The server has {online_players} players online\nThe server has the following players online: {specific_players}"
+    message_content = f"The server has {online_players} players online\nThe server has the following players online: {specific_players}".strip()
 
     # send message to debug channel, uses current time and date
     await client.get_channel(debug_channel).send(
@@ -99,7 +101,6 @@ async def update_online_message():
 @tree.command(
     name="online-players",
     description="Gets the online players",
-    guild=discord.Object(id=guild_id),
 )  # Add the guild ids in which the slash command will appear. If it should be in all, remove the argument,
 # but note that it will take some time (up to an hour) to register the command if it's for all guilds.
 async def online_players(ctx):
@@ -116,7 +117,7 @@ async def online_players(ctx):
 # Bot event: When the client is ready
 @client.event
 async def on_ready():
-    await tree.sync(guild=discord.Object(id=guild_id))
+    await tree.sync()
     print(f"Logged in as {client.user.name}")
     # Start a background task to update the status every minute
     update_client.start()
