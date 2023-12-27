@@ -1,1 +1,1 @@
-discord_bot_token =
+discord_bot_token = "MTE3OTU3OTkwOTQwOTA5NTczMQ.GeuMPC.YQNi1hU7RJhOh8jYscUw95KGkM6EotO1ynEFF8"
