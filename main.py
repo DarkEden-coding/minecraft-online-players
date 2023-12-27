@@ -29,8 +29,14 @@ async def get_server_info():
             status = server.status()
             online_players = status.players.online
             # check to make sure the objects are the correct types
-            assert isinstance(online_players, int)
-            assert isinstance(query.players.names, list)
+            check = (online_players, query.players.names)
+            try:
+                assert isinstance(check, tuple)
+                assert isinstance(check[0], int)
+                assert isinstance(check[1], list)
+            except AssertionError as e:
+                await send_error_message(e)
+                continue
             return online_players, query.players.names
         except Exception as e:
             await send_error_message(e)
