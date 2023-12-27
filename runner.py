@@ -6,7 +6,7 @@ def run_target_file(file_path):
     try:
         # Attempt to run the target Python file
         subprocess.run(['python', file_path], check=True)
-    except subprocess.CalledProcessError as e:
+    except Exception as e:
         # If an error occurs, print the error message and rerun the target file
         print(f"Error occurred: {e}")
         print("Rerunning the target file...")
