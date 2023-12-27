@@ -18,7 +18,7 @@ debug_channel = 1180938049480310804
 
 
 async def send_error_message(error):
-    await client.get_channel(debug_channel).send(f"Error: {str(error)}")
+    await client.get_channel(debug_channel).send(f"Error: {str(error)} at time: {time.strftime('%H:%M:%S %d/%m/%Y')}")
 
 
 async def get_server_info():
